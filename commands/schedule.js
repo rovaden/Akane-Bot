@@ -1,5 +1,5 @@
 const { Util } = require("discord.js");
-const constant = require("../constant.json")
+const constant = require("../variables.js")
 
 module.exports = {
     name: "schedule",
