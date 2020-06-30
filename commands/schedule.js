@@ -9,6 +9,7 @@ module.exports = {
         if(args != null){
             constant.hrtime = args[0];
             constant.mntime = args[1];
+            message.reply(args[0] + " " + args[1]);
             message.react(':white_check_mark:');
         }
     }
