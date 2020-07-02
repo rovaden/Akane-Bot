@@ -8,7 +8,7 @@ module.exports = {
         if(!args.length){
             return message.reply("dont waste my time");
         } else{
-        const sayMessage =  await args.join(" ");
+        const sayMessage = args.join(" ");
         message.delete().catch(O_o=>{}); 
         message.channel.send(sayMessage);
         }
