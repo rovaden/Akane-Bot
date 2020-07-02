@@ -6,6 +6,7 @@ module.exports = {
 
     async execute(message){
         console.log("cmd was received");
+        console.log(args.toString());
         // if(!args.length){
         //     return message.reply("dont waste my time");
         // } else{
