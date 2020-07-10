@@ -9,7 +9,7 @@ module.exports = {
             return message.reply("dont waste my time");
         } else{
         const sayMessage = args.join(" ");
-        message.delete()
+        await message.delete()
             .then(msg => console.log(`Deleted message from ${msg.author.username}`))
             .catch(console.error);
         message.channel.send(sayMessage);
