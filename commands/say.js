@@ -7,7 +7,7 @@ module.exports = {
     async execute(message){
         try{
         console.log("cmd was received");
-        console.log(args.toString());}
+        console.log(message.args.toString());}
         catch (error) {
             console.error(error);
         }
