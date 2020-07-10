@@ -30,7 +30,7 @@ client.on("message", async message => {
     if(message.author.bot) return;
     if(message.content.indexOf(process.env.BOT_PREFIX) !== 0) return;
     const args = message.content.slice(process.env.BOT_PREFIX.length).trim().split(/ +/g);
-    const commandName = args.shift().toLowerCase();
+    const commandName = args[0].shift().toLowerCase();
     const command = client.commands.get(commandName);
 
     try {

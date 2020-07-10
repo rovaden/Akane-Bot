@@ -10,7 +10,6 @@ module.exports = {
         console.log(args.toString());}
         catch (error) {
             console.error(error);
-            message.reply('There is no command called that!');
         }
         // if(!args.length){
         //     return message.reply("dont waste my time");
