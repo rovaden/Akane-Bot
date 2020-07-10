@@ -30,8 +30,9 @@ client.on("message", async message => {
     if(message.author.bot) return;
     if(message.content.indexOf(process.env.BOT_PREFIX) !== 0) return;
     const args = message.content.slice(process.env.BOT_PREFIX.length).trim().split(/ +/g);
-    const commandName = args[0].shift().toLowerCase();
+    const commandName = args.shift().toLowerCase();
     const command = client.commands.get(commandName);
+    console.log(args.toString());
 
     try {
 		command.execute(message);
