@@ -35,7 +35,7 @@ client.on("message", async message => {
     console.log(args.toString());
 
     try {
-		command.execute(message);
+		command.execute(message, args, commandName);
 	} catch (error) {
 		console.error(error);
 		message.reply('There is no command called that!');

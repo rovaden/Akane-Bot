@@ -4,7 +4,7 @@ module.exports = {
     name: "ping",
     description: "Get ping for bot",
 
-    async execute(message){
+    async execute(message, args, commandName){
         const m = await message.channel.send("Ping?");
         m.edit(`Pong! Latency is ${m.createdTimestamp - message.createdTimestamp}ms.`);
     }
