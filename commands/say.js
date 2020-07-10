@@ -5,8 +5,13 @@ module.exports = {
     description: "say things and delete cmd message",
 
     async execute(message){
+        try{
         console.log("cmd was received");
-        console.log(args.toString());
+        console.log(args.toString());}
+        catch (error) {
+            console.error(error);
+            message.reply('There is no command called that!');
+        }
         // if(!args.length){
         //     return message.reply("dont waste my time");
         // } else{
