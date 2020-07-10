@@ -5,7 +5,6 @@ module.exports = {
     description: "say things and delete cmd message",
 
     async execute(message, args, commandName){
-        const args = this.args;
         try{
         console.log("cmd was received");
         console.log(args.toString());}
