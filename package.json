@@ -10,6 +10,7 @@
     "bent": "^7.3.7",
     "discord.js": "^12.2.0",
     "dotenv": "^8.2.0",
-    "mongodb": "^3.5.9"
+    "mongodb": "^3.5.9",
+    "mongoose": "^5.9.25"
   }
 }
