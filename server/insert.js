@@ -2,7 +2,7 @@ module.exports = {
     name: "insertfunct",
     description: "testing mongo db",
 
-    async insertdocs(db, callback){
+    async executesrv(db, callback){
         // Get the documents collection
        const collection = db.collection('documents');
         // Insert some documents
