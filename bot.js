@@ -13,11 +13,18 @@
   const mgclient = new MongoClient(uri, { useNewUrlParser: true });
   const dbName = 'coronaviruscrew-akane';
   const commandFilessrv = fs.readdirSync('./server').filter(file => file.endsWith('.js'));
-  var command
+  // var commandsrv = require(`./server/${commandFilessrv}`);
+  
 
 for (const file of commandFiles) {
 	const command = require(`./commands/${file}`);
 	client.commands.set(command.name, command);
+}
+
+for (const file of commandFilessrv){
+  const commandsrv = require(`./server/${commandFilessrv}`);
+  const commandserv = new Map();
+  commandserv.set(commandsrv.name, commandsrv);
 }
 
 //server method
@@ -48,10 +55,12 @@ client.on("message", async message => {
     const args = message.content.slice(process.env.BOT_PREFIX.length).trim().split(/ +/g);
     const commandName = args.shift().toLowerCase();
     const command = client.commands.get(commandName);
+    const commandsrv = commandserv.get(commandName);
     console.log(args.toString());
 
     try {
     command.execute(message, args, commandName);
+    commandsrv.executesrv(message, args, commandName);
 	} catch (error) {
 		console.error(error);
 		message.reply('There is no command called that!');
