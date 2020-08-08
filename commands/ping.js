@@ -6,6 +6,8 @@ module.exports = {
 
     async execute(message, args, commandName){
         const m = await message.channel.send("Ping?");
-        m.edit(`Pong! Latency is ${m.createdTimestamp - message.createdTimestamp}ms.`);
+        const ping = m.createdTimestamp - message.createdTimestamp;
+        m.edit(`Pong! Latency is ` + ping + `ms.`);
+        return ping;
     }
 }

@@ -3,6 +3,7 @@
   const fs = require('fs')
   const Discord = require("discord.js");
   const Client = require('./client/client.js');
+  const { Console } = require('console');
   const client = new Discord.Client();
   client.commands = new Discord.Collection();
   const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
@@ -10,33 +11,25 @@
 //server consts
   const uri = "mongodb+srv://rovaden:Caculas4@akane.o7hy4.mongodb.net/coronaviruscrew-akane?retryWrites=true&w=majority";
   const MongoClient = require('mongodb').MongoClient;
-  const mgclient = new MongoClient(uri, { useNewUrlParser: true });
+  const mgclient = new MongoClient(uri, { poolSize:10, useUnifiedTopology: true });
   const dbName = 'coronaviruscrew-akane';
   const commandFilessrv = fs.readdirSync('./server').filter(file => file.endsWith('.js'));
-  // var commandsrv = require(`./server/${commandFilessrv}`);
-  
+  const commandsrvMap = new Map();
 
 for (const file of commandFiles) {
 	const command = require(`./commands/${file}`);
-	client.commands.set(command.name, command);
+  client.commands.set(command.name, command);
 }
 
 for (const file of commandFilessrv){
-  const commandsrv = require(`./server/${commandFilessrv}`);
-  const commandserv = new Map();
-  commandserv.set(commandsrv.name, commandsrv);
+  const commandsrv = require(`./server/${file}`);
+  commandsrvMap.set(commandsrv.name, commandsrv);
+  console.log(commandsrv.name);
 }
 
-//server method
-mgclient.connect(err => {
-  const collection = mgclient.db("test").collection("devices");
-  console.log("Connected successfully to server");
-    const db = mgclient.db(dbName);
-  });
-
 client.on("ready", () => {
-  console.log(`Bot has started, with ${client.users.size} users, in ${client.channels.size} channels of ${client.guilds.size} guilds.`); 
-  client.user.setActivity(`Serving ${client.guilds.size} servers`);
+  console.log(`Bot has started, with ${client.users.cache.size} users, in ${client.channels.cache.size} channels of ${client.guilds.cache.size} guilds.`); 
+  client.user.setActivity(`Serving ${client.guilds.cache.size} servers`);
 });
 
 client.on("guildCreate", guild => {
@@ -55,16 +48,19 @@ client.on("message", async message => {
     const args = message.content.slice(process.env.BOT_PREFIX.length).trim().split(/ +/g);
     const commandName = args.shift().toLowerCase();
     const command = client.commands.get(commandName);
-    const commandsrv = commandserv.get(commandName);
+    const commandsrv = commandsrvMap.get(commandName);
     console.log(args.toString());
 
-    try {
-    command.execute(message, args, commandName);
-    commandsrv.executesrv(message, args, commandName);
-	} catch (error) {
+  try {
+    var execute = await command.execute(message, args, commandName);
+    mgclient.connect( function(err, client) {
+      console.log("Connected correctly to server");
+      const db = client.db(dbName); 
+      commandsrv.executesrv(db, mgclient, message, args, execute);
+    });
+	    } catch (error) {
 		console.error(error);
-		message.reply('There is no command called that!');
-	}
+      }
 });
 
 client.login(process.env.BOT_TOKEN);
