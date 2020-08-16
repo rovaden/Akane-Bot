@@ -7,7 +7,7 @@ module.exports = {
     async executesrv(db, mgclient, message, args, execute){
         // Use the collection "people"
         const col = db.collection("ping");
-        const ping = execute;
+        var ping = execute;
 
         // Construct a document                                                                                                                                                              
         let pingDoc = {
@@ -18,9 +18,8 @@ module.exports = {
         // Insert a single document, wait for promise so we can read it back
         const p = await col.insertOne(pingDoc);
         // Find one document
-        const myDoc = await col.findOne();
+        const myDoc = await col.findOne( { "ping": { $eq : ping}});
         // Print to the console
         console.log(myDoc);
-        mgclient.close();
     }
 }

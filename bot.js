@@ -15,6 +15,7 @@
   const dbName = 'coronaviruscrew-akane';
   const commandFilessrv = fs.readdirSync('./server').filter(file => file.endsWith('.js'));
   const commandsrvMap = new Map();
+  var db;
 
 for (const file of commandFiles) {
 	const command = require(`./commands/${file}`);
@@ -26,6 +27,11 @@ for (const file of commandFilessrv){
   commandsrvMap.set(commandsrv.name, commandsrv);
   console.log(commandsrv.name);
 }
+
+mgclient.connect( function(err, client) {
+  console.log("Connected correctly to server");
+  db = client.db(dbName); 
+});
 
 client.on("ready", () => {
   console.log(`Bot has started, with ${client.users.cache.size} users, in ${client.channels.cache.size} channels of ${client.guilds.cache.size} guilds.`); 
@@ -53,11 +59,7 @@ client.on("message", async message => {
 
   try {
     var execute = await command.execute(message, args, commandName);
-    mgclient.connect( function(err, client) {
-      console.log("Connected correctly to server");
-      const db = client.db(dbName); 
-      commandsrv.executesrv(db, mgclient, message, args, execute);
-    });
+    commandsrv.executesrv(db, mgclient, message, args, execute);
 	    } catch (error) {
 		console.error(error);
       }
