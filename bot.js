@@ -20,12 +20,12 @@
 for (const file of commandFiles) {
 	const command = require(`./commands/${file}`);
   client.commands.set(command.name, command);
+  console.log(command.name);
 }
 
 for (const file of commandFilessrv){
   const commandsrv = require(`./server/${file}`);
   commandsrvMap.set(commandsrv.name, commandsrv);
-  console.log(commandsrv.name);
 }
 
 mgclient.connect( function(err, client) {
