@@ -13,6 +13,7 @@
   const MongoClient = require('mongodb').MongoClient;
   const mgclient = new MongoClient(uri, { poolSize:10, useUnifiedTopology: true });
   const dbName = 'akane-bot';
+  console.log(process.env.MONGODB_URI);
   const commandFilessrv = fs.readdirSync('./server').filter(file => file.endsWith('.js'));
   const commandsrvMap = new Map();
   var db;
