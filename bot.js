@@ -9,10 +9,10 @@
   const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 
 //server consts
-  const uri = "mongodb+srv://rovaden:Caculas4@akane.o7hy4.mongodb.net/coronaviruscrew-akane?retryWrites=true&w=majority";
+  const uri = process.env.MONGODB_URI;
   const MongoClient = require('mongodb').MongoClient;
   const mgclient = new MongoClient(uri, { poolSize:10, useUnifiedTopology: true });
-  const dbName = 'coronaviruscrew-akane';
+  const dbName = 'akane-bot';
   const commandFilessrv = fs.readdirSync('./server').filter(file => file.endsWith('.js'));
   const commandsrvMap = new Map();
   var db;
