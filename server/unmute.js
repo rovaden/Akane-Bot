@@ -9,7 +9,7 @@ module.exports = {
         let user = execute;
         const myDoc = await col.findOne( { userID: { $eq : user.id}});
         console.log(myDoc);
-        user.edit(user.roles.remove([`720384515440377886`]));
+        user.edit(user.roles.remove([`758141145225756672`]));
         for(i=0; i< myDoc.roles.length; i++){
             user.edit(user.roles.add(myDoc.roles[i]));
         }

@@ -12,9 +12,13 @@ module.exports = {
             message.channel.send(`I can't mute ${user} because you made an oopsie.`);
             return null;
         }
-        user.edit(user.roles.set([`758141145225756672`]));
+        try {
+            user.edit(user.roles.set([`758141145225756672`]));
+        } catch (error) {
+           console.log(error); 
+        }
         message.channel.send(`${user} has been muted`);
-        let package = [roles, user.id]
+        let package = [roles, user.id];
         return package;
     }
 }
