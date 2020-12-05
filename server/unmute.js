@@ -12,7 +12,11 @@ module.exports = {
         for(i=0; i< myDoc.roles.length; i++){
             user.edit(user.roles.add(myDoc.roles[i]));
         }
-        user.edit(user.roles.remove([`758141145225756672`]));
+        try {
+            user.edit(user.roles.remove([`758141145225756672`]));
+        } catch (error) {
+            console.log("unmute role delete " + error);
+        }
         col.deleteOne( { _id: { $eq : myDoc._id}});
         message.channel.send(`${user} hes been unmuted`);
     }
