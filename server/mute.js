@@ -7,10 +7,12 @@ module.exports = {
     async executesrv(db, mgclient, message, args, execute){
         const col = db.collection("mute-role-log");
         var package = execute;
+        const time = new Date(Date.now());
 
         // Construct a document                                                                                                                                                              
         let roleDoc = {
             userID: package[1],
+            time: [time.getDate(), time.getMonth(), time.getFullYear() ],
             roles: package[0]
         }
 
