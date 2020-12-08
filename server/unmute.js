@@ -9,14 +9,8 @@ module.exports = {
         let user = execute;
         const myDoc = await col.findOne( { userID: { $eq : user.id}});
         console.log(myDoc);
-        for(i=0; i< myDoc.roles.length; i++){
-            user.edit(user.roles.add(myDoc.roles[i]));
-        }
-        try {
-            user.edit(user.roles.remove([`758141145225756672`]));
-        } catch (error) {
-            console.log("unmute role delete " + error);
-        }
+        user.edit(user.roles.set(myDoc.roles));
+        // user.edit(user.roles.remove([`758141145225756672`]));
         col.deleteOne( { _id: { $eq : myDoc._id}});
         message.channel.send(`${user} hes been unmuted`);
     }
