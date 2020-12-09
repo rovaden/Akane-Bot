@@ -5,6 +5,10 @@ module.exports = {
     description: "mutes people, not bots",
 
     async execute(message, args, commandName){
+        if (message.author.hasPermission("ADMINISTRATOR") != true ){
+            message.reply("no fuck you. u dont got the perms");
+            return null;
+        };
         let user = message.mentions.members.first();
         console.log(user._roles);
         let roles = user._roles;
