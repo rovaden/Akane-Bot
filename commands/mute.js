@@ -5,7 +5,8 @@ module.exports = {
     description: "mutes people, not bots",
 
     async execute(message, args, commandName){
-        if (message.author._roles.includes("768214883808313384") != true ){
+        console.log()
+        if (!message.author._roles.includes("768214883808313384")){
             message.reply("no fuck you. u dont got the perms");
             return null;
         };
