@@ -66,4 +66,6 @@ client.on("message", async message => {
       }
 });
 
+
+console.log("peepepekhjkdahfjkdhfsjkladf"); 
 client.login(process.env.BOT_TOKEN);
