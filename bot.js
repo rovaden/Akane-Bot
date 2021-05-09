@@ -12,7 +12,7 @@
   const uri = process.env.MONGODB_URI;
   const MongoClient = require('mongodb').MongoClient;
   const mgclient = new MongoClient(uri, { poolSize:10, useUnifiedTopology: true });
-  const dbName = "akane-bot";
+  const dbName = 'akane-bot';
   console.log(process.env.MONGODB_URI);
   const commandFilessrv = fs.readdirSync('./server').filter(file => file.endsWith('.js'));
   const commandsrvMap = new Map();
@@ -29,9 +29,9 @@ for (const file of commandFilessrv){
   commandsrvMap.set(commandsrv.name, commandsrv);
 }
 
-mgclient.connect( err => {
+mgclient.connect( function(err, client) {
   console.log("Connected correctly to server");
-  db = mgclient.db(dbName); 
+  db = client.db(dbName); 
 });
 
 client.on("ready", () => {
@@ -66,5 +66,6 @@ client.on("message", async message => {
       }
 });
 
+
+console.log("peepepekhjkdahfjkdhfsjkladf"); 
 client.login(process.env.BOT_TOKEN);
-console.log("fully connected")
