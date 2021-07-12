@@ -4,7 +4,7 @@ module.exports = {
     name: "coinflip",
     description: "",
 
-    async execute(message, args, commandName){
+    async execute(message, args, commandName, db, mgclient){
         var result = (Math.round(Math.random())==0? "Heads":"Tails");
         message.reply("The coin landed on: " + result);
         return null;

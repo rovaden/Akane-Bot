@@ -4,7 +4,7 @@ module.exports = {
     name: "say",
     description: "say things and delete cmd message",
 
-    async execute(message, args, commandName){
+    async execute(message, args, commandName, db, mgclient){
         if(!args.length){
             return message.reply("dont waste my time");
         } else{

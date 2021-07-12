@@ -4,7 +4,7 @@ module.exports = {
     name: "",
     description: "",
 
-    async execute(message, args, commandName){
+    async execute(message, args, commandName, db, mgclient){
         
     }
 }

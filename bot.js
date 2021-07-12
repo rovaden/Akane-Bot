@@ -14,19 +14,12 @@
   const mgclient = new MongoClient(uri, { poolSize:10, useUnifiedTopology: true });
   const dbName = 'akane-bot';
   console.log(process.env.MONGODB_URI);
-  const commandFilessrv = fs.readdirSync('./server').filter(file => file.endsWith('.js'));
-  const commandsrvMap = new Map();
   var db;
 
 for (const file of commandFiles) {
 	const command = require(`./commands/${file}`);
   client.commands.set(command.name, command);
   console.log(command.name);
-}
-
-for (const file of commandFilessrv){
-  const commandsrv = require(`./server/${file}`);
-  commandsrvMap.set(commandsrv.name, commandsrv);
 }
 
 mgclient.connect( function(err, client) {
@@ -55,17 +48,14 @@ client.on("message", async message => {
     const args = message.content.slice(process.env.BOT_PREFIX.length).trim().split(/ +/g);
     const commandName = args.shift().toLowerCase();
     const command = client.commands.get(commandName);
-    const commandsrv = commandsrvMap.get(commandName);
-    console.log(args.toString());
+    console.log("arguements: " + args.toString());
 
   try {
-    var execute = await command.execute(message, args, commandName);
-    commandsrv.executesrv(db, mgclient, message, args, execute);
+    command.execute(message, args, commandName, db, mgclient);
 	    } catch (error) {
-		console.error(error);
+		  console.error(error);
+      message.reply("there was a problem with processing your request, please check to see that you called the command you're looking for correctly!");
       }
 });
 
-
-console.log("peepepekhjkdahfjkdhfsjkladf"); 
 client.login(process.env.BOT_TOKEN);
