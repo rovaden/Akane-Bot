@@ -22,10 +22,17 @@ for (const file of commandFiles) {
   console.log(command.name);
 }
 
-mgclient.connect( function(err, client) {
+ mgclient.connect( function(err, client) {
   console.log("Connected correctly to server");
-  db = client.db(dbName); 
+  db = client.db(dbName);
+  setup(); 
 });
+
+async function setup(){
+  const settings = await db.collection("settings").findOne({BOT_PREFIX : { $exists : true}});
+  console.log("prefix: " + settings.BOT_PREFIX)
+  process.env.BOT_PREFIX = settings.BOT_PREFIX.toString();
+}
 
 client.on("ready", () => {
   console.log(`Bot has started, with ${client.users.cache.size} users, in ${client.channels.cache.size} channels of ${client.guilds.cache.size} guilds.`); 
@@ -43,6 +50,7 @@ client.on("guildDelete", guild => {
 });
 
 client.on("message", async message => {
+  console.log(process.env.BOT_PREFIX)
     if(message.author.bot) return;
     if(message.content.indexOf(process.env.BOT_PREFIX) !== 0) return;
     const args = message.content.slice(process.env.BOT_PREFIX.length).trim().split(/ +/g);
